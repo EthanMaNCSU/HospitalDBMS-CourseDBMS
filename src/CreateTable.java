@@ -22,28 +22,8 @@ public class CreateTable {
 	private static ResultSet result = null;
 
 	public static void main(String[] args) {
-
 		initialize();
 
-		try {
-			boolean canAfford = checkAbilityToStudy("Todd");
-			// ************************************************************************
-
-			// modifyALittleBit1();
-			modifyALittleBit2();
-
-			boolean canAfford1 = checkAbilityToStudy("Angela");
-
-			if (canAfford == canAfford1) {
-				System.out.println("Success");
-			} else {
-				System.out.println("Failure");
-			}
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		// ***********************************************************************
 		close();
 	}
 
@@ -85,12 +65,14 @@ public class CreateTable {
 		connection = DriverManager.getConnection(jdbcURL, user, password);
 		statement = connection.createStatement();
 
-		try {
-			statement.executeUpdate("DROP TABLE Students");
-			statement.executeUpdate("DROP TABLE Schools");
-		} catch (SQLException e) {
-		}
+//		try {
+//			statement.executeUpdate("DROP TABLE Students");
+//			statement.executeUpdate("DROP TABLE Schools");
+//		} catch (SQLException e) {
+//		}
 	}
+
+
 
 	private static boolean checkAbilityToStudy(String studentName) {
 		try {
