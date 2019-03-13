@@ -57,44 +57,44 @@ public class CreateTable {
 //                    "'billing staff', NULL, 'Primary Care', '0002 Aki St., Raleigh, NC, USA, 27606', '9198912345', 'operator')");
 
 
-            statement.executeUpdate("INSERT INTO Wards VALUES (NULL, 3, 2, 20.0f");
-//            statement.executeUpdate("INSERT INTO Wards VALUES (NULL, 3, 1, 10.0");
-//            statement.executeUpdate("INSERT INTO Wards VALUES (NULL, 3, 4, 40.0");
-//            statement.executeUpdate("INSERT INTO Wards VALUES (NULL, 3, 1, 50.0");
+//            statement.executeUpdate("INSERT INTO Wards VALUES (NULL, 3, 2, 20.0)");
+//            statement.executeUpdate("INSERT INTO Wards VALUES (NULL, 3, 1, 10.0)");
+//            statement.executeUpdate("INSERT INTO Wards VALUES (NULL, 3, 4, 40.0)");
+//            statement.executeUpdate("INSERT INTO Wards VALUES (NULL, 3, 1, 50.0)");
+
+
+//            statement.executeUpdate("INSERT INTO BillingAccounts VALUES (2, '0001 The Black Pearl, Raleigh, NC, USA, 27606', " +
+//                    "'2019-03-12', 0.0)");
+//            statement.executeUpdate("INSERT INTO BillingAccounts VALUES (3, '0002 Red Keep, Raleigh, NC, USA, 27606', " +
+//                    "'2019-03-12', 0.0)");
+//            statement.executeUpdate("INSERT INTO BillingAccounts VALUES (4, '0001 Red Keep, Raleigh, NC, USA, 27606', " +
+//                    "'2019-03-12', 0.0)");
+//            statement.executeUpdate("INSERT INTO BillingAccounts VALUES (5, '0003 Duima St., Raleigh, NC, USA, 27606', " +
+//                    "'2019-03-12', 0.0)");
+
+
+//            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 2, 'registration', '2019-03-12')");
+//            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 3, 'registration', '2019-03-12')");
+//            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 4, 'registration', '2019-03-12')");
+//            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 5, 'registration', '2019-03-12')");
+
+
+//            statement.executeUpdate("INSERT INTO PaymentMethods VALUES (NULL, 2, 1, 'pm_patient_1', '0123456789012345', '0420')");
+//            statement.executeUpdate("INSERT INTO PaymentMethods VALUES (NULL, 3, 1, 'pm_patient_2', '1234567890123456', '0420')");
+//            statement.executeUpdate("INSERT INTO PaymentMethods VALUES (NULL, 4, 2, 'pm_patient_3', '2345678901234567', '0323')");
+//            statement.executeUpdate("INSERT INTO PaymentMethods VALUES (NULL, 5, 2, 'pm_patient_4', '3456789012345678', '0323')");
 //
 //
-//            statement.executeUpdate("INSERT INTO BillingAccounts VALUES (1, '0001 The Black Pearl, Raleigh, NC, USA, 27606', " +
-//                    "'2019-03-12', 0.0");
-//            statement.executeUpdate("INSERT INTO BillingAccounts VALUES (2, '0002 Red Keep, Raleigh, NC, USA, 27606', " +
-//                    "'2019-03-12', 0.0");
-//            statement.executeUpdate("INSERT INTO BillingAccounts VALUES (3, '0001 Red Keep, Raleigh, NC, USA, 27606', " +
-//                    "'2019-03-12', 0.0");
-//            statement.executeUpdate("INSERT INTO BillingAccounts VALUES (4, '0003 Duima St., Raleigh, NC, USA, 27606', " +
-//                    "'2019-03-12', 0.0");
-//
-//
-//            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 1, 'registration', '2019-03-12'");
-//            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 2, 'registration', '2019-03-12'");
-//            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 3, 'registration', '2019-03-12'");
-//            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 4, 'registration', '2019-03-12'");
-//
-//
-//            statement.executeUpdate("INSERT INTO PaymentMethods VALUES (NULL, 1, 1, 'pm_patient_1', '0123456789012345', '0420'");
-//            statement.executeUpdate("INSERT INTO PaymentMethods VALUES (NULL, 2, 1, 'pm_patient_2', '1234567890123456', '0420'");
-//            statement.executeUpdate("INSERT INTO PaymentMethods VALUES (NULL, 3, 2, 'pm_patient_3', '2345678901234567', '0323'");
-//            statement.executeUpdate("INSERT INTO PaymentMethods VALUES (NULL, 4, 2, 'pm_patient_4', '3456789012345678', '0323'");
-//
-//
-//            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 1, 1, '2019-03-12', '2019-03-18', NULL, NULL");
-//            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 2, 1, '2019-03-12', '2019-03-18', NULL, NULL");
-//            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 3, 2, '2019-03-12', '2019-03-18', NULL, NULL");
-//            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 4, 2, '2019-03-12', '2019-03-18', NULL, NULL");
-//
-//
-//            statement.executeUpdate("INSERT INTO CheckIn VALUES (1, 1, '2019-03-12', '2019-03-18'");
-//            statement.executeUpdate("INSERT INTO CheckIn VALUES (2, 1, '2019-03-12', '2019-03-18'");
-//            statement.executeUpdate("INSERT INTO CheckIn VALUES (3, 2, '2019-03-12', '2019-03-18'");
-//            statement.executeUpdate("INSERT INTO CheckIn VALUES (4, 2, '2019-03-12', '2019-03-18'");
+//            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 2, 1, '2019-03-12', '2019-03-18', NULL, NULL)");
+//            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 3, 1, '2019-03-12', '2019-03-18', NULL, NULL)");
+//            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 4, 2, '2019-03-12', '2019-03-18', NULL, NULL)");
+//            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 5, 2, '2019-03-12', '2019-03-18', NULL, NULL)");
+
+
+            statement.executeUpdate("INSERT INTO CheckIn VALUES (2, 7, '2019-03-12', '2019-03-18')");
+            statement.executeUpdate("INSERT INTO CheckIn VALUES (3, 8, '2019-03-12', '2019-03-18')");
+            statement.executeUpdate("INSERT INTO CheckIn VALUES (4, 9, '2019-03-12', '2019-03-18')");
+            statement.executeUpdate("INSERT INTO CheckIn VALUES (5, 10, '2019-03-12', '2019-03-18')");
 
 
         } catch (SQLException e) {
@@ -140,12 +140,12 @@ public class CreateTable {
 //
 //        statement.executeUpdate("CREATE TABLE PaymentMethods (PMID INT AUTO_INCREMENT, PID INT, SID INT, PMName VARCHAR(20) NOT NULL, " +
 //                "CardNum VARCHAR(16) NOT NULL, CardValidDate VARCHAR(4) NOT NULL, Primary Key(PMID, PID, SID), Foreign Key(PID) references Patients(PID), Foreign Key(SID) references Staff(SID))");
-//
+
 //        statement.executeUpdate("CREATE TABLE MedicalRecord (MID INT AUTO_INCREMENT, PID INT, SID INT, StartDate DATE NOT NULL, EndDate DATE NOT NULL, " +
 //                "Prescription VARCHAR(256), Diagnosis VARCHAR(256), Primary Key(MID), Foreign Key(PID) references Patients(PID), Foreign Key(SID) references Staff(SID))");
-//
-//        statement.executeUpdate("CREATE TABLE CheckIn (PID INT, WNum INT, StartDate DATE NOT NULL, " +
-//                "EndDate DATE NOT NULL, Primary Key(PID, WNum), Foreign Key(PID) references Patients(PID),Foreign Key(WNum) references Wards(WNum))");
+
+        statement.executeUpdate("CREATE TABLE CheckIn (PID INT, WNum INT, StartDate DATE NOT NULL, " +
+                "EndDate DATE NOT NULL, Primary Key(PID, WNum), Foreign Key(PID) references Patients(PID),Foreign Key(WNum) references Wards(WNum))");
 
     }
 
