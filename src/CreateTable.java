@@ -19,10 +19,25 @@ public class CreateTable {
     private static Statement statement = null;
     private static ResultSet result = null;
 
-    public static void main(String[] args) {
-        initialize();
+    public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
+        connectToDatabase();
+        //dropTables();
+        createTables();
+        insertData();
         close();
+
+    }
+
+    private static void insertData() {
+        try {
+            statement.executeUpdate("INSERT INTO Students VALUES ('Todd', 'NC State'," + " 18, 16000, 30000, 'M')");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     public static void dropTables() {
@@ -70,17 +85,6 @@ public class CreateTable {
 
     }
 
-    private static void initialize() {
-        try {
-            connectToDatabase();
-            //dropTables();
-            createTables();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     private static void connectToDatabase() throws ClassNotFoundException, SQLException {
         Class.forName("org.mariadb.jdbc.Driver");
