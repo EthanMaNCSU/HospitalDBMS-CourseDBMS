@@ -33,7 +33,7 @@ public class CreateTable {
 
 			statement.executeUpdate("CREATE TABLE Patients (PID INT, SSN VARCHAR(9), Name VARCHAR(40) NOT NULL, DOB VARCHAR(8) NOT NULL, Gender VARCHAR(1) NOT NULL, " +
 					"Age INT NOT NULL, Status VARCHAR(64) NOT NULL, Address VARCHAR(64), PhoneNum VARCHAR(10) NOT NULL, Primary Key(PID))");
-			statement.executeUpdate("CREATE TABLE Wards (WNum INT, SID INT, Capacity INT BOT NULL, ChargePerDay FLOAT NOT NULL, " +
+			statement.executeUpdate("CREATE TABLE Wards (WNum INT, SID INT, Capacity INT NOT NULL, ChargePerDay FLOAT NOT NULL, " +
 					"Primary Key(WNum), Foreign Key(SID) references Staff(SID))");
 			statement.executeUpdate("CREATE TABLE Staff (SID INT, Name VARCHAR(40) NOT NULL, Age INT NOT NULL, Gender VARCHAR(1) NOT NULL, JobTitle VARCHAR(20) NOT NULL, " +
 					"ProfTitle VARCHAR(20), Department VARCHAR(20), Address VARCHAR(64) NOT NULL, PhoneNum VARCHAR(10) NOT NULL, Type VARCHAR(10), " +
@@ -48,8 +48,7 @@ public class CreateTable {
 					"Prescription VARCHAR(256), Diagnosis VARCHAR(256)), Primary Key(MID, PID, SID), Foreign Key(PID) references Patients(PID), Foreign Key(SID) references Staff(SID)");
 			statement.executeUpdate("CREATE TABLE CheckIn (PID INT, WNum VARCHAR(20) NOT NULL, StartDate VARCHAR(8) NOT NULL, " +
 					"EndDate VARCHAR(8) NOT NULL, BedNum VARCHAR(20) NOT NULL, Primary Key(PID, WNum), Foreign Key(WNum) references Patients(PID))");
-
-			statement.executeUpdate("CREATE TABLE TreatedBy (PID INT, SID INT, Primary Key(PID, SID))");
+			
 
 					//+ "School VARCHAR(10), Age INTEGER, FundingReceived INTEGER, Income INTEGER, Sex CHAR(1))");
 /*
