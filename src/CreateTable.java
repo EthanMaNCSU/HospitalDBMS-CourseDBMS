@@ -23,11 +23,11 @@ public class CreateTable {
 
         connectToDatabase();
 
-        //dropTables();
+        dropTables();
 
-        createTables();
-
-        insertData();
+//        createTables();
+//
+//        insertData();
 
         close();
 
@@ -42,7 +42,7 @@ public class CreateTable {
 			statement.executeUpdate("INSERT INTO Patients VALUES (NULL, '234567891', 'Tyrion Lannister', " +
 					"'1900-01-01', 'M', 119, 'completing treatment', '0002 Red Keep, Raleigh, NC, USA, 27606', '9192345678')");
 			statement.executeUpdate("INSERT INTO Patients VALUES (NULL, '345678912', 'Jamie Lannister', " +
-					"'1897-01-01', 'M', 122, 'processing treatment plan', '0001 Red Keep, Raleigh, NC, USA, 27606', '9193456789')");
+					"'1897-01-01', 'F', 122, 'processing treatment plan', '0001 Red Keep, Raleigh, NC, USA, 27606', '9193456789')");
 			statement.executeUpdate("INSERT INTO Patients VALUES (NULL, '456789123', 'Cho Akiyama', " +
 					"'1905-01-01', 'M', 114, 'in ward', '0003 Duima St., Raleigh, NC, USA, 27606', '9194567891')");
 
@@ -57,10 +57,10 @@ public class CreateTable {
                     "'billing staff', NULL, 'Primary Care', '0002 Aki St., Raleigh, NC, USA, 27606', '9198912345', 'operator')");
 
 
-            statement.executeUpdate("INSERT INTO Wards VALUES (NULL, 3, 2, 20.0)");
-            statement.executeUpdate("INSERT INTO Wards VALUES (NULL, 3, 1, 10.0)");
-            statement.executeUpdate("INSERT INTO Wards VALUES (NULL, 3, 4, 40.0)");
-            statement.executeUpdate("INSERT INTO Wards VALUES (NULL, 3, 1, 50.0)");
+            statement.executeUpdate("INSERT INTO Wards VALUES (NULL, 3, 2, 20.0,'N')");
+            statement.executeUpdate("INSERT INTO Wards VALUES (NULL, 3, 1, 10.0,'N')");
+            statement.executeUpdate("INSERT INTO Wards VALUES (NULL, 3, 4, 40.0,'N')");
+            statement.executeUpdate("INSERT INTO Wards VALUES (NULL, 3, 1, 50.0,'N')");
 
 
             statement.executeUpdate("INSERT INTO BillingAccounts VALUES (2, '0001 The Black Pearl, Raleigh, NC, USA, 27606', " +
@@ -74,15 +74,15 @@ public class CreateTable {
 
 
             statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 2, 'registration', '2019-03-12')");
-            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 3, 'registration', '2019-03-12')");
-            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 4, 'registration', '2019-03-12')");
+            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 3, 'medical', '2019-03-12')");
+            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 2, 'accommodation', '2019-03-12')");
             statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 5, 'registration', '2019-03-12')");
 
 
-            statement.executeUpdate("INSERT INTO PaymentMethods VALUES (NULL, 2, 1, 'pm_patient_1', '0123456789012345', '0420')");
-            statement.executeUpdate("INSERT INTO PaymentMethods VALUES (NULL, 3, 1, 'pm_patient_2', '1234567890123456', '0420')");
-            statement.executeUpdate("INSERT INTO PaymentMethods VALUES (NULL, 4, 2, 'pm_patient_3', '2345678901234567', '0323')");
-            statement.executeUpdate("INSERT INTO PaymentMethods VALUES (NULL, 5, 2, 'pm_patient_4', '3456789012345678', '0323')");
+            statement.executeUpdate("INSERT INTO PaymentMethods VALUES ('0123456789012345', 2, 'debit',  '0420')");
+            statement.executeUpdate("INSERT INTO PaymentMethods VALUES ('1234567890123456', 3, 'debit',  '0420')");
+            statement.executeUpdate("INSERT INTO PaymentMethods VALUES ('2345678901234567', 4, 'credit', '0323')");
+            statement.executeUpdate("INSERT INTO PaymentMethods VALUES ('3456789012345678', 5, 'credit', '0323')");
 
 
             statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 2, 1, '2019-03-12', '2019-03-18', NULL, NULL)");
@@ -122,7 +122,7 @@ public class CreateTable {
     }
 
     public static void createTables() throws SQLException {
-        statement.executeUpdate("CREATE TABLE Patients (PID INT AUTO_INCREMENT, SSN VARCHAR(9), Name VARCHAR(40) NOT NULL, DOB DATE NOT NULL, Gender CHAR(1) check (Gender IN ('F','M'), " +
+        statement.executeUpdate("CREATE TABLE Patients (PID INT AUTO_INCREMENT, SSN VARCHAR(9), Name VARCHAR(40) NOT NULL, DoB DATE NOT NULL, Gender CHAR(1) check (Gender IN ('F','M'), " +
                 "Age INT NOT NULL, Status CHAR(64) NOT NULL, Address VARCHAR(64), PhoneNum VARCHAR(10) NOT NULL, Primary Key(PID))");
 
         statement.executeUpdate("CREATE TABLE Staff (SID INT AUTO_INCREMENT, Name VARCHAR(40) NOT NULL, Age INT NOT NULL, Gender VARCHAR(1) check (Gender IN ('F','M'), JobTitle VARCHAR(20) NOT NULL, " +
@@ -138,7 +138,7 @@ public class CreateTable {
         statement.executeUpdate("CREATE TABLE BillingRecords (RID INT AUTO_INCREMENT, PID INT, RecordType VARCHAR(20) check (RecordType in ('medical', 'registration', 'accommodation')), CreatedDate DATE NOT NULL, " +
                 "Primary Key(RID), Foreign Key(PID) references Patients(PID))");
 
-        statement.executeUpdate("CREATE TABLE PaymentMethods (CardNum VARCHAR(16), PID INT,  PMName VARCHAR(20) NOT NULL, " +
+        statement.executeUpdate("CREATE TABLE PaymentMethods (CardNum VARCHAR(16), PID INT,  Type VARCHAR(20) check (Type IN ('debit','credit')), " +
                 "CardValidDate VARCHAR(4) NOT NULL, Primary Key(CardNum), Foreign Key(PID) references Patients(PID))");
 
         statement.executeUpdate("CREATE TABLE MedicalRecord (MID INT AUTO_INCREMENT, PID INT, SID INT, StartDate DATE NOT NULL, EndDate DATE NOT NULL, " +
