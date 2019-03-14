@@ -26,6 +26,18 @@ public class CreateTable {
     }
 
     /**
+     * Maintaining medical records for each patient: Enter/update a new medical record for each treatment, test, and check-in.
+     */
+    public static void maintainMedicalRecord(){
+        try {
+            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 2, 1, '2019-03-15', '2019-03-18', NULL, NULL)");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+    /**
      * temp: just for assignment 4.1
      */
     public static void infoProcess(){
@@ -252,13 +264,13 @@ public class CreateTable {
         statement.executeUpdate("CREATE TABLE BillingAccounts (PID INT, BillingAddr VARCHAR(64) NOT NULL, CreatedDate DATE NOT NULL, " +
                 "Balance FLOAT NOT NULL DEFAULT 0.0, Primary Key(PID), Foreign Key(PID) references Patients(PID))");
 
-        statement.executeUpdate("CREATE TABLE BillingRecords (RID INT AUTO_INCREMENT, PID INT, RecordType VARCHAR(20) check (RecordType in ('medical', 'registration', 'accommodation')), CreatedDate DATE NOT NULL, " +
-                "Primary Key(RID), Foreign Key(PID) references Patients(PID))");
+        statement.executeUpdate("CREATE TABLE BillingRecords (RID INT AUTO_INCREMENT, PID INT, RecordType VARCHAR(20), CreatedDate DATE NOT NULL, " +
+                "Primary Key(RID), Foreign Key(PID) references Patients(PID),Foreign Key(RecordType) references MedicalRecord(RecordType))");
 
         statement.executeUpdate("CREATE TABLE PaymentMethods (CardNum VARCHAR(16), PID INT,  Type VARCHAR(20) check (Type IN ('debit','credit')), " +
                 "CardValidDate VARCHAR(4) NOT NULL, Primary Key(CardNum), Foreign Key(PID) references Patients(PID))");
 
-        statement.executeUpdate("CREATE TABLE MedicalRecord (MID INT AUTO_INCREMENT, PID INT, SID INT, StartDate DATE NOT NULL, EndDate DATE NOT NULL, " +
+        statement.executeUpdate("CREATE TABLE MedicalRecord (MID INT AUTO_INCREMENT, PID INT, SID INT, RecordType VARCHAR(20) check (RecordType in ('treatment','test', 'check-in', 'accommodation')),StartDate DATE NOT NULL, EndDate DATE NOT NULL, " +
                 "Prescription VARCHAR(256), Diagnosis VARCHAR(256), Primary Key(MID), Foreign Key(PID) references Patients(PID), Foreign Key(SID) references Staff(SID))");
 
         statement.executeUpdate("CREATE TABLE CheckIn (PID INT, WNum INT, StartDate DATE NOT NULL, " +
