@@ -27,6 +27,7 @@ public class CreateTable {
 
     /**
      * Maintaining medical records for each patient: Enter/update a new medical record for each treatment, test, and check-in.
+     * 'treatment','test', 'check-in', 'accommodation'
      */
     public static void maintainMedicalRecord(){
         try {
@@ -214,10 +215,10 @@ public class CreateTable {
             statement.executeUpdate("INSERT INTO PaymentMethods VALUES ('3456789012345678', 4, 'credit', '0323')");
 
 
-            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 2, 1, '2019-03-12', '2019-03-18', NULL, NULL)");
-            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 3, 1, '2019-03-12', '2019-03-18', NULL, NULL)");
-            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 4, 2, '2019-03-12', '2019-03-18', NULL, NULL)");
-            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 1, 2, '2019-03-12', '2019-03-18', NULL, NULL)");
+            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 2, 1,'check-in' '2019-03-12', '2019-03-18', NULL, NULL)");
+            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 3, 1,'treatment' '2019-03-12', '2019-03-18', NULL, NULL)");
+            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 4, 2, 'test','2019-03-12', '2019-03-18', NULL, NULL)");
+            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 1, 2, 'treatment','2019-03-12', '2019-03-18', NULL, NULL)");
 
 
             statement.executeUpdate("INSERT INTO CheckIn VALUES (2, 1, '2019-03-12', '2019-03-18')");
@@ -264,8 +265,8 @@ public class CreateTable {
         statement.executeUpdate("CREATE TABLE BillingAccounts (PID INT, BillingAddr VARCHAR(64) NOT NULL, CreatedDate DATE NOT NULL, " +
                 "Balance FLOAT NOT NULL DEFAULT 0.0, Primary Key(PID), Foreign Key(PID) references Patients(PID))");
 
-        statement.executeUpdate("CREATE TABLE BillingRecords (RID INT AUTO_INCREMENT, PID INT, RecordType VARCHAR(20), CreatedDate DATE NOT NULL, " +
-                "Primary Key(RID), Foreign Key(PID) references Patients(PID),Foreign Key(RecordType) references MedicalRecord(RecordType))");
+        statement.executeUpdate("CREATE TABLE BillingRecords (RID INT AUTO_INCREMENT, PID INT, MID INT NOT NULL, CreatedDate DATE NOT NULL, " +
+                "Primary Key(RID), Foreign Key(PID) references Patients(PID),Foreign Key(MID) references MedicalRecord(MID))");
 
         statement.executeUpdate("CREATE TABLE PaymentMethods (CardNum VARCHAR(16), PID INT,  Type VARCHAR(20) check (Type IN ('debit','credit')), " +
                 "CardValidDate VARCHAR(4) NOT NULL, Primary Key(CardNum), Foreign Key(PID) references Patients(PID))");
