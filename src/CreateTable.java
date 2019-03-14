@@ -4,13 +4,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-/**
- * Acknowledgments: This example is a modification of code provided by Dimitri
- * Rakitine. Further modified by Shrikanth N C for MySql(MariaDB) support.
- * Replace all $USER$ with your unity id and $PASSWORD$ with your 9 digit
- * student id or updated password (if changed)
- */
-
 public class CreateTable {
     static final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/xfang7";
     // Put your oracle ID and password here
@@ -25,17 +18,144 @@ public class CreateTable {
 
       //  dropTables();
 
-        createTables();
+      //  createTables();
 
-        insertData();
+      //  insertData();
 
         close();
 
     }
 
+    /**
+     * temp: just for assignment 4.1
+     */
+    public static void infoProcess(){
+        processStaff();
+        processPatient();
+        processWard();
+        assignWard();
+    }
+
+    /**
+     * temp: just for assignment 4.1
+     */
+    public static void processStaff() {
+        try {
+            //add
+            statement.executeUpdate("INSERT INTO Staff VALUES (NULL, 'Tom Smith', 35, 'F', " +
+                    "'Nurse', 'Nursing Supervisor', 'Primary Care', '3761 Giovanni St., Raleigh, NC, USA, 27606', '9197891411', 'nurse')");
+            //update
+            statement.executeUpdate("UPDATE Staff SET Age = 39 WHERE Name = 'Tom Smith'");
+
+            // Delete
+            statement.executeUpdate("DELETE from Staff WHERE Name like 'Tom %'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
 
-	private static void insertData() {
+    /**
+     * temp: just for assignment 4.1
+     */
+    public static void processPatient() {
+        try {
+            //add
+            statement.executeUpdate("INSERT INTO Patients VALUES (NULL, '333456789', 'Alice Sparrow', " +
+                    "'1998-01-01', 'F', 22, 'in ward', '123 The Black Pearl, Raleigh, NC, USA, 27606', '9991234567')");
+
+            //update
+            statement.executeUpdate("UPDATE Patients SET PhoneNum = '8881234567' WHERE Name like '% Sparrow' and Age = 22");
+
+            // Delete
+            statement.executeUpdate("DELETE from Patients WHERE  PhoneNum = '8881234567'");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * temp: just for assignment 4.1
+     */
+    public static void processWard() {
+        try {
+            //add
+            statement.executeUpdate("INSERT INTO Wards VALUES (NULL, 3, 2, 20.0,'N')");
+
+            //update
+            statement.executeUpdate("UPDATE Wards SET Capacity = '1' and ChargePerDay = '10.0' WHERE WNum = 5");
+
+            // Delete
+            statement.executeUpdate("DELETE from Wards WHERE WNum = 5");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * temp: just for assignment 4.1
+     */
+    public static boolean  assignWard(){
+
+        try {
+            // query  available wards
+            ResultSet availabe = statement
+                    .executeQuery("SELECT * FROM Wards WHERE Occupied = 'N'");
+            //query bed = 1 , 2, 4
+            ResultSet result1 = statement
+                    .executeQuery("SELECT * FROM Wards WHERE Capacity = 1");
+
+            ResultSet result2 = statement
+                    .executeQuery("SELECT * FROM Wards WHERE Capacity = 2");
+
+            ResultSet result4 = statement
+                    .executeQuery("SELECT * FROM Wards WHERE Capacity = 4");
+
+            // assign to patient# 1
+            ResultSet assign1 = statement
+                    .executeQuery("SELECT * FROM Wards WHERE Capacity = 1 and Occupied = 'N' limit 1");
+            if (assign1.next()) {
+                int wId= assign1.getInt("WNum");
+                statement.executeUpdate("INSERT INTO CheckIn VALUES (1, $[wId], '2019-03-12', '2019-03-18')");
+                statement.executeUpdate("UPDATE Wards SET Occupied = 'Y' WHERE WNum = $[wId]");
+            }
+
+            // assign to patient# 2
+            ResultSet assign2 = statement
+                    .executeQuery("SELECT * FROM Wards WHERE Capacity = 2 and Occupied = 'N' limit 1");
+            if (assign1.next()) {
+                int wId= assign2.getInt("WNum");
+                statement.executeUpdate("INSERT INTO CheckIn VALUES (2, $[wId], '2019-03-17', '2019-03-18')");
+                statement.executeUpdate("UPDATE Wards SET Occupied = 'Y' WHERE WNum = $[wId]");
+            }
+            // assign to patient# 4
+            //SELECT @wId :=WNum FROM Wards WHERE Capacity = 4 and Occupied = 'N' limit 1;
+            ResultSet assign4 = statement
+                    .executeQuery("SELECT * FROM Wards WHERE Capacity = 4 and Occupied = 'N' limit 1");
+            if (assign1.next()) {
+                int wId= assign4.getInt("WNum");
+                statement.executeUpdate("INSERT INTO CheckIn VALUES (3, $[wId], '2019-03-17', '2019-03-18')");
+                statement.executeUpdate("UPDATE Wards SET Occupied = 'Y' WHERE WNum = $[wId]");
+            }
+
+            //Release a ward
+
+            ResultSet release = statement
+                    .executeQuery("SELECT * FROM CheckIn WHERE PID = 3");
+            int wId  = release.getInt("WNum");
+            statement.executeUpdate("DELETE from CheckIn WHERE PID = 3");
+            statement.executeUpdate("UPDATE Wards SET Occupied = 'N' WHERE WNum = $[wId]");
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+
+    }
+
+
+
+    private static void insertData() {
         try {
             statement.executeUpdate("INSERT INTO Patients VALUES (NULL, '123456789', 'Jack Sparrow', " +
 					"'1900-01-01', 'M', 119, 'in ward', '0001 The Black Pearl, Raleigh, NC, USA, 27606', '9191234567')");
@@ -159,11 +279,6 @@ public class CreateTable {
         connection = DriverManager.getConnection(jdbcURL, user, password);
         statement = connection.createStatement();
 
-//		try {
-//			statement.executeUpdate("DROP TABLE Students");
-//			statement.executeUpdate("DROP TABLE Schools");
-//		} catch (SQLException e) {
-//		}
     }
 
 
