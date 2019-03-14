@@ -203,10 +203,10 @@ public class CreateTable {
                     "'2019-03-12', 0.0)");
 
 
-            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 1, 'registration', '2019-03-12')");
-            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 2, 'medical', '2019-03-12')");
-            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 3, 'accommodation', '2019-03-12')");
-            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 4, 'registration', '2019-03-12')");
+            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 1, 1, '2019-03-12')");
+            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 2, 2, '2019-03-12')");
+            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 3, 3, '2019-03-12')");
+            statement.executeUpdate("INSERT INTO BillingRecords VALUES (NULL, 4, 4, '2019-03-12')");
 
 
             statement.executeUpdate("INSERT INTO PaymentMethods VALUES ('0123456789012345', 1, 'debit',  '0420')");
@@ -265,7 +265,7 @@ public class CreateTable {
         statement.executeUpdate("CREATE TABLE BillingAccounts (PID INT, BillingAddr VARCHAR(64) NOT NULL, CreatedDate DATE NOT NULL, " +
                 "Balance FLOAT NOT NULL DEFAULT 0.0, Primary Key(PID), Foreign Key(PID) references Patients(PID))");
 
-        statement.executeUpdate("CREATE TABLE BillingRecords (RID INT AUTO_INCREMENT, PID INT, MID INT NOT NULL, CreatedDate DATE NOT NULL, " +
+        statement.executeUpdate("CREATE TABLE BillingRecords (RID INT AUTO_INCREMENT, PID INT, MID INT, CreatedDate DATE NOT NULL, " +
                 "Primary Key(RID), Foreign Key(PID) references Patients(PID),Foreign Key(MID) references MedicalRecord(MID))");
 
         statement.executeUpdate("CREATE TABLE PaymentMethods (CardNum VARCHAR(16), PID INT,  Type VARCHAR(20) check (Type IN ('debit','credit')), " +
