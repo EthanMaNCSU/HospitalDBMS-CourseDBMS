@@ -15,7 +15,6 @@ public class CreateTable {
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
 
         connectToDatabase();
-
       //  dropTables();
 
       //  createTables();
@@ -113,38 +112,36 @@ public class CreateTable {
 
             // assign to patient# 1
             ResultSet assign1 = statement
-                    .executeQuery("SELECT * FROM Wards WHERE Capacity = 1 and Occupied = 'N' limit 1");
+                    .executeQuery("SELECT @wId := WNum FROM Wards WHERE Capacity = 1 and Occupied = 'N' limit 1");
             if (assign1.next()) {
-                int wId= assign1.getInt("WNum");
-                statement.executeUpdate("INSERT INTO CheckIn VALUES (1, $[wId], '2019-03-12', '2019-03-18')");
-                statement.executeUpdate("UPDATE Wards SET Occupied = 'Y' WHERE WNum = $[wId]");
+                statement.executeUpdate("INSERT INTO CheckIn VALUES (1, @wId, '2019-03-12', '2019-03-18')");
+                statement.executeUpdate("UPDATE Wards SET Occupied = 'Y' WHERE WNum = @wId");
             }
 
             // assign to patient# 2
             ResultSet assign2 = statement
-                    .executeQuery("SELECT * FROM Wards WHERE Capacity = 2 and Occupied = 'N' limit 1");
-            if (assign1.next()) {
-                int wId= assign2.getInt("WNum");
-                statement.executeUpdate("INSERT INTO CheckIn VALUES (2, $[wId], '2019-03-17', '2019-03-18')");
-                statement.executeUpdate("UPDATE Wards SET Occupied = 'Y' WHERE WNum = $[wId]");
+                    .executeQuery("SELECT @wId := WNum FROM Wards WHERE Capacity = 2 and Occupied = 'N' limit 1");
+            if (assign2.next()) {
+                statement.executeUpdate("INSERT INTO CheckIn VALUES (2, @wId, '2019-03-17', '2019-03-18')");
+                statement.executeUpdate("UPDATE Wards SET Occupied = 'Y' WHERE WNum = @wId");
             }
             // assign to patient# 4
             //SELECT @wId :=WNum FROM Wards WHERE Capacity = 4 and Occupied = 'N' limit 1;
             ResultSet assign4 = statement
-                    .executeQuery("SELECT * FROM Wards WHERE Capacity = 4 and Occupied = 'N' limit 1");
-            if (assign1.next()) {
-                int wId= assign4.getInt("WNum");
-                statement.executeUpdate("INSERT INTO CheckIn VALUES (3, $[wId], '2019-03-17', '2019-03-18')");
-                statement.executeUpdate("UPDATE Wards SET Occupied = 'Y' WHERE WNum = $[wId]");
+                    .executeQuery("SELECT @wId := WNum FROM Wards WHERE Capacity = 4 and Occupied = 'N' limit 1");
+            if (assign4.next()) {
+                //int wId= assign4.getInt("WNum");
+                statement.executeUpdate("INSERT INTO CheckIn VALUES (3,@wId, '2019-03-17', '2019-03-18')");
+                statement.executeUpdate("UPDATE Wards SET Occupied = 'Y' WHERE WNum = @wId");
             }
 
             //Release a ward
 
-            ResultSet release = statement
-                    .executeQuery("SELECT * FROM CheckIn WHERE PID = 3");
-            int wId  = release.getInt("WNum");
-            statement.executeUpdate("DELETE from CheckIn WHERE PID = 3");
-            statement.executeUpdate("UPDATE Wards SET Occupied = 'N' WHERE WNum = $[wId]");
+//            ResultSet release = statement
+//                    .executeQuery("SELECT * FROM CheckIn WHERE PID = 3");
+//            int wId  = release.getInt("WNum");
+//            statement.executeUpdate("DELETE from CheckIn WHERE PID = 3");
+//            statement.executeUpdate("UPDATE Wards SET Occupied = 'N' WHERE WNum = $[wId]");
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -279,34 +276,6 @@ public class CreateTable {
         connection = DriverManager.getConnection(jdbcURL, user, password);
         statement = connection.createStatement();
 
-    }
-
-
-    private static boolean checkAbilityToStudy(String studentName) {
-        try {
-            result = statement
-                    .executeQuery("SELECT (FundingReceived+Income) AS TotalIncome, (TuitonFees+LivingExpenses) AS "
-                            + "TotalFees FROM Students, Schools WHERE Students.School = Schools.Name AND Students.Name "
-                            + "LIKE '" + studentName + "%'");
-
-            if (result.next()) {
-                return (result.getInt("TotalIncome") > result.getInt("TotalFees"));
-            }
-            throw new RuntimeException(studentName + " cannot be found.");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    private static void modifyALittleBit1() throws SQLException {
-        statement.executeUpdate("UPDATE Students SET Income = 39000 WHERE Name LIKE 'Angela%'");
-        statement.executeUpdate("UPDATE Schools SET TuitonFees = 30000 WHERE Name = 'NYU'");
-    }
-
-    private static void modifyALittleBit2() throws SQLException {
-        statement.executeUpdate("UPDATE Students SET Income = 55000 WHERE Name LIKE 'Angela%'");
-        statement.executeUpdate("UPDATE Schools SET TuitonFees = 15000 WHERE Name = 'NYU'");
     }
 
     private static void close() {
