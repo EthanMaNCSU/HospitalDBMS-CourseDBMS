@@ -26,11 +26,34 @@ public class CreateTable {
     }
 
     /**
+     * PID INT, BillingAddr VARCHAR(64) NOT NULL, CreatedDate DATE NOT NULL, " +
+     *                 "Balance FLOAT NOT NULL DEFAULT 0.0, Primary Key(PID), Foreign Key(PID) references Patients(PID))
+     * Generate/maintain billing accounts for every visit of every patient. Before generating an account,
+     * make sure there is space in the hospital for the patient (in case the patient needs to stay in the hospital).
+     */
+
+    public static void maintainBillingAccount(){
+        try {
+            statement.executeUpdate("INSERT INTO BillingAccounts VALUES (1, '0001 The Black Pearl, Raleigh, NC, USA, 27606', " +
+                    "'2019-03-12', 0.0)");
+            statement.executeUpdate("INSERT INTO BillingAccounts VALUES (2, '0002 Red Keep, Raleigh, NC, USA, 27606', " +
+                    "'2019-03-12', 0.0)");
+            statement.executeUpdate("INSERT INTO BillingAccounts VALUES (3, '0001 Red Keep, Raleigh, NC, USA, 27606', " +
+                    "'2019-03-12', 0.0)");
+            statement.executeUpdate("INSERT INTO BillingAccounts VALUES (4, '0003 Duima St., Raleigh, NC, USA, 27606', " +
+                    "'2019-03-12', 0.0)");
+
+            statement.executeUpdate("UPDATE BillingAccounts SET BillingAddr = '3571 ivy common, raleigh,nc,USA' WHERE PID = 1");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    /**
      * Maintaining medical records for each patient: Enter/update a new medical record for each treatment, test, and check-in.
-     * 'treatment','test', 'check-in', 'accommodation'
-     * MID INT AUTO_INCREMENT, PID INT, SID INT
-     * MID INT AUTO_INCREMENT, PID INT, SID INT, RecordType VARCHAR(20) check (RecordType in ('treatment','test', 'check-in', 'accommodation')),StartDate DATE NOT NULL, EndDate DATE NOT NULL, " +
-     *                 "Prescription VARCHAR(256), Diagnosis VARCHAR(256)
      */
     public static void maintainMedicalRecord(){
         try {
