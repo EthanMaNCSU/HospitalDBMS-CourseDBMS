@@ -28,15 +28,23 @@ public class CreateTable {
     /**
      * Maintaining medical records for each patient: Enter/update a new medical record for each treatment, test, and check-in.
      * 'treatment','test', 'check-in', 'accommodation'
+     * MID INT AUTO_INCREMENT, PID INT, SID INT
+     * MID INT AUTO_INCREMENT, PID INT, SID INT, RecordType VARCHAR(20) check (RecordType in ('treatment','test', 'check-in', 'accommodation')),StartDate DATE NOT NULL, EndDate DATE NOT NULL, " +
+     *                 "Prescription VARCHAR(256), Diagnosis VARCHAR(256)
      */
     public static void maintainMedicalRecord(){
         try {
-            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 2, 1, '2019-03-15', '2019-03-18', NULL, NULL)");
-
+            //enter
+            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 2, 4,'check-in', '2019-03-12', '2019-03-18', NULL, NULL)");
+            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 2, 1,'treatment', '2019-03-18', '2019-03-18', NULL, NULL)");
+            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 2, 2, 'test','2019-03-18', '2019-03-18', NULL, NULL)");
+            //update
+            statement.executeUpdate("UPDATE MedicalRecord SET StartDate = '2019-03-15' WHERE MID = 1");
+            statement.executeUpdate("UPDATE MedicalRecord SET Diagnosis = 'headache,need rest' WHERE MID = 2");
+            statement.executeUpdate("UPDATE MedicalRecord SET Diagnosis = 'Test result will be delivery in 24h' WHERE MID = 3");
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
     /**
      * temp: just for assignment 4.1
@@ -150,11 +158,10 @@ public class CreateTable {
 
             //Release a ward
 
-//            ResultSet release = statement
-//                    .executeQuery("SELECT * FROM CheckIn WHERE PID = 3");
-//            int wId  = release.getInt("WNum");
-//            statement.executeUpdate("DELETE from CheckIn WHERE PID = 3");
-//            statement.executeUpdate("UPDATE Wards SET Occupied = 'N' WHERE WNum = $[wId]");
+            ResultSet release = statement
+                    .executeQuery("SELECT  @wId := WNum FROM CheckIn WHERE PID = 3");
+            statement.executeUpdate("DELETE from CheckIn WHERE PID = 3");
+            statement.executeUpdate("UPDATE Wards SET Occupied = 'N' WHERE WNum = @wId");
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -215,8 +222,8 @@ public class CreateTable {
             statement.executeUpdate("INSERT INTO PaymentMethods VALUES ('3456789012345678', 4, 'credit', '0323')");
 
 
-            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 2, 1,'check-in' '2019-03-12', '2019-03-18', NULL, NULL)");
-            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 3, 1,'treatment' '2019-03-12', '2019-03-18', NULL, NULL)");
+            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 2, 1,'check-in', '2019-03-12', '2019-03-18', NULL, NULL)");
+            statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 3, 1,'treatment', '2019-03-12', '2019-03-18', NULL, NULL)");
             statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 4, 2, 'test','2019-03-12', '2019-03-18', NULL, NULL)");
             statement.executeUpdate("INSERT INTO MedicalRecord VALUES (NULL, 1, 2, 'treatment','2019-03-12', '2019-03-18', NULL, NULL)");
 
