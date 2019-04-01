@@ -5,6 +5,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class CreateTable {
+    /***
+     * ssh xfang7@remote.eos.ncsu.edu
+     *
+     */
     static final String jdbcURL = "jdbc:mariadb://classdb2.csc.ncsu.edu:3306/xfang7";
     // Put your oracle ID and password here
 
